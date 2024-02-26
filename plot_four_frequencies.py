@@ -31,7 +31,7 @@ p2_color = 'c'
 p1_color = '#1f77b4'
 
 plt.rcParams['axes.labelsize'] = 25   # Set x and y labels fontsize
-plt.rcParams['legend.fontsize'] = 8  # Set legend fontsize
+plt.rcParams['legend.fontsize'] = 16  # Set legend fontsize
 plt.rcParams['xtick.labelsize'] = 20  # Set x tick labels fontsize
 plt.rcParams['ytick.labelsize'] = 20  # Set y tick labels fontsize
 plt.rcParams['grid.linewidth'] = 1.5
@@ -39,7 +39,7 @@ plt.rcParams['axes.linewidth'] = 1.5
 
 line_width = 2.5
 
-fig, axs = plt.subplots(2, 2, figsize=(9, 3))  # 1 row, 2 columns
+fig, axs = plt.subplots(2, 2, figsize=(16, 9))  # 1 row, 2 columns
 
 for j, file_path in enumerate(file_paths):
         
@@ -144,6 +144,16 @@ legend_elements = [
 
 fig.legend(handles=legend_elements, loc='upper center', handlelength=2,ncol=7, bbox_to_anchor=(0.5, 1.01), fontsize=18)
 
+fig.subplots_adjust(
+    top=0.925,
+    bottom=0.315,
+    left=0.075,
+    right=0.98,
+    hspace=0.2,
+    wspace=0.105
+)
+
+plt.savefig('filtered-four.pdf')
 # plt.legend(['Actual Displacement', 'Estimated Displacement'])
 # plt.title('Estimated Displacement', fontsize=25)
 

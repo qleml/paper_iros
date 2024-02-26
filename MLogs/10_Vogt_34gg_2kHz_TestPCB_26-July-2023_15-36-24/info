@@ -1,0 +1,18 @@
+-----------EXPERIMENT-----------
+Time Stamp: 26-July-2023_15-36-24
+HASEL Number: 10
+Signal Type: Vogt
+MaxAmplitude: 3000
+Weight: 34g
+FctGenerator Frequency: 2kHz
+Sampling Rate DAQ: 100000
+Duration [s]:25
+Comment: TestPCB
+-----------POST PROCESS-----------
+RMS Window Size: 200
+Moving average Window size: 10
+Fitting Degree: 3
+Coefficients: 7.293450e+00,-8.943757e+01,3.646365e+02,-4.963233e+02
+RMSE Value: 0.051369
+Max DIsplacement: 2.2632
+Comment: 403525
