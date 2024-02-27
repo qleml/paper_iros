@@ -111,13 +111,11 @@ for j, file_path in enumerate(file_paths):
             print(f"NaN values found in window ")
 
 
-  
-
     coefficients = np.polyfit(rms_voltage_values, adj_displacement, degree)
     
-    coefficients_2 = [-125.6595, 1734.503, -7973.444, 12207.37]
-    coefficients_2 = [-14.53913, 182.8583, -766.8713, 1072.563]
-    coefficients_2 = [7.427259, -89.15698, 355.8401, -472.8132]
+    # coefficients_2 = [-125.6595, 1734.503, -7973.444, 12207.37]
+    # coefficients_2 = [-14.53913, 182.8583, -766.8713, 1072.563]
+    # coefficients_2 = [7.427259, -89.15698, 355.8401, -472.8132]
 
     if j==2:
         coefficients = [7.597979, -91.58709, 367.074, -489.5696] # 10 Hz
@@ -125,6 +123,13 @@ for j, file_path in enumerate(file_paths):
 
     est_displ = np.polyval(coefficients, rms_voltage_values)
 
+    offset = np.min(adj_displacement)
+    adj_displacement -= offset
+    est_displ -= offset
+
+    if j==0:
+         adj_displacement *= 2.25
+         est_displ *= 2.25
 
     axs[j // 2][j % 2].plot(adjusted_time, adj_displacement, linewidth=line_width, color='r')
     axs[j // 2][j % 2].plot(adjusted_time, est_displ, linewidth=line_width, color=p1_color)

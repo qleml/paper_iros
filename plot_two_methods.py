@@ -6,7 +6,7 @@ from matplotlib.lines import Line2D
 
 # Define the window size for calculating RMS values and moving average filter
 rms_window_size = 200
-moving_average_window_size = 1  # Adjust the window size for the moving average filter
+moving_average_window_size = 10  # Adjust the window size for the moving average filter
 
 # 10_Sine_34gg_2kHz_1M-1M_26-July-2023_12-18-37 für Fig 9 und 10
 
@@ -91,6 +91,11 @@ est_displ_2 = est_displ_2[adjusted_time >= 5]
 adjusted_time = adjusted_time[adjusted_time >= 5]
 adjusted_time -= 5
 
+offset = np.min(adj_displacement)
+adj_displacement -= offset
+est_displ_1 -= offset
+est_displ_2 -= offset
+
 
 A = 6 
 plt.rc('text', usetex=True)
@@ -149,7 +154,7 @@ fig.subplots_adjust(
     wspace=0.105
 )
 
-plt.savefig('two-method-comparison-unfiltered.pdf')
+plt.savefig('two-method-comparison-filtered.pdf')
 # plt.legend(['Actual Displacement', 'Estimated Displacement'])
 # plt.title('Estimated Displacement', fontsize=25)
 
