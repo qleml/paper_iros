@@ -6,7 +6,7 @@ from matplotlib.lines import Line2D
 
 # Define the window size for calculating RMS values and moving average filter
 rms_window_size = 200
-moving_average_window_size = 10  # Adjust the window size for the moving average filter
+moving_average_window_size = 1  # Adjust the window size for the moving average filter
 
 # 10_Sine_34gg_2kHz_1M-1M_26-July-2023_12-18-37 für Fig 9 und 10
 
@@ -118,7 +118,8 @@ line_width = 2.5
 fig, axs = plt.subplots(1, 2, figsize=(16, 9))  # 1 row, 2 columns
 
 axs[0].plot(adjusted_time, adj_displacement, linewidth=line_width, color='r')
-axs[0].plot(adjusted_time, est_displ_1, linewidth=line_width, color=p1_color)
+axs[0].plot(adjusted_time, est_displ_1, linewidth=line_width, color=p1_color, alpha=0.7)  # 50% opacity
+
 axs[0].set_xlabel(r'Time (s)', weight='bold')  # X-axis label with increased font size and bold
 axs[0].set_ylabel(r'Displacement (mm)')  # Y-axis label with increased font size and bold
 axs[0].grid(True)  # Add grid with dashed lines
@@ -127,7 +128,8 @@ axs[0].grid(True)  # Add grid with dashed lines
 
 # Plotting on the second subplot
 axs[1].plot(adjusted_time, adj_displacement, linewidth=line_width, color='r')
-axs[1].plot(adjusted_time, est_displ_2, linewidth=line_width, color=p2_color)
+axs[1].plot(adjusted_time, est_displ_2, linewidth=line_width, color=p2_color, alpha=0.7)  # 50% opacity
+
 axs[1].set_xlabel(r'Time (s)', weight='bold')  # X-axis label with increased font size and bold
 axs[1].grid(True)  # Add grid with dashed lines
 #axs[1].set_title(r"b)", fontsize=28)
@@ -154,7 +156,7 @@ fig.subplots_adjust(
     wspace=0.105
 )
 
-plt.savefig('two-method-comparison-filtered.pdf')
+plt.savefig('two-method-comparison.pdf')
 # plt.legend(['Actual Displacement', 'Estimated Displacement'])
 # plt.title('Estimated Displacement', fontsize=25)
 

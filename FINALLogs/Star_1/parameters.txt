@@ -1,0 +1,19 @@
+Kp: 0.45
+0.95
+ 0.9
+0.95
+Ki: 0.001
+0.002
+0.002
+0.002
+Kd: 0
+0
+0
+0
+Time Of CRT parameter: 170.626
+Max Displ 1: 6.5
+Max Displ 2: 6.5
+Max Displ 3: 6.5
+Max Displ 4: 6.5
+Vertical Radius to Conn: 6.5
+Distance to Side: 20

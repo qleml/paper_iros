@@ -6,7 +6,7 @@ from matplotlib.lines import Line2D
 
 # Define the window size for calculating RMS values and moving average filter
 rms_window_size = 200
-moving_average_window_size = 10  # Adjust the window size for the moving average filter
+moving_average_window_size = 1  # Adjust the window size for the moving average filter
 
 # 10_Sine_34gg_2kHz_1M-1M_26-July-2023_12-18-37 für Fig 9 und 10
 # 10_Sine_34gg_2kHz_TestPCB_26-July-2023_16-52-48 für Fig. 12 (8 Hz)
@@ -40,6 +40,9 @@ plt.rcParams['axes.linewidth'] = 1.5
 line_width = 2.5
 
 fig, axs = plt.subplots(2, 2, figsize=(16, 9))  # 1 row, 2 columns
+
+titles = [r'1 Hz', r'8 Hz', r'10 Hz', r'20 Hz']
+
 
 for j, file_path in enumerate(file_paths):
         
@@ -141,6 +144,9 @@ for j, file_path in enumerate(file_paths):
     axs[j // 2][j % 2].grid(True)  # Add grid with dashed lines
     print("yey")
 
+    axs[j // 2][j % 2].set_title(titles[j])
+
+
 
 legend_elements = [
     Line2D([0], [0], color=p1_color, lw=2, label='Estimated Displacement (Method 1)'),
@@ -158,7 +164,7 @@ fig.subplots_adjust(
     wspace=0.105
 )
 
-plt.savefig('filtered-four.pdf')
+plt.savefig('four.pdf')
 # plt.legend(['Actual Displacement', 'Estimated Displacement'])
 # plt.title('Estimated Displacement', fontsize=25)
 

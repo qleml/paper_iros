@@ -3,17 +3,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import h5py
 from matplotlib.lines import Line2D
+from matplotlib.animation import FuncAnimation, PillowWriter
+from tqdm import tqdm
+from matplotlib.animation import FFMpegWriter
 
 # Define the window size for calculating RMS values and moving average filter
 rms_window_size = 200
-moving_average_window_size = 50  # Adjust the window size for the moving average filter
+moving_average_window_size = 1  # Adjust the window size for the moving average filter
 
 # 10_Sine_34gg_2kHz_1M-1M_26-July-2023_12-18-37 für Fig 9 und 10
 
 # 10_Vogt_34gg_2kHz_TestPCB_26-July-2023_15-36-24 Fig. 15
 # 10_LFT_34gg_2kHz_UpsideDown_26-July-2023_21-17-32 Fig. 16
 
-with h5py.File('MLogs/10_LFT_34gg_2kHz_UpsideDown_26-July-2023_21-17-32/data.mat', 'r') as file:
+with h5py.File('MLogs/10_Vogt_34gg_2kHz_TestPCB_26-July-2023_15-36-24/data.mat', 'r') as file:
+#with h5py.File('MLogs/10_LFT_34gg_2kHz_UpsideDown_26-July-2023_21-17-32/data.mat', 'r') as file:
     # Extract the data
     data = {}
     for key, value in file.items():
@@ -92,6 +96,11 @@ est_displ_1 -= offset
 # adjusted_time = adjusted_time[adjusted_time >= 5]
 # adjusted_time -= 5
 
+#start = 7
+#end = 13
+
+# ofset the x-axis by start time
+#adjusted_time -= start
 
 A = 6 
 plt.rc('text', usetex=True)
@@ -111,25 +120,16 @@ plt.rcParams['axes.linewidth'] = 1.5
 
 line_width = 2.5
 
-fig, axs = plt.subplots(1, 1, figsize=(16, 9))  # 1 row, 2 columns
+fig, axs = plt.subplots(1, 1, figsize=(13, 9))  # 1 row, 2 columns
 
 axs.plot(adjusted_time, adj_displacement, linewidth=line_width, color='r')
 axs.plot(adjusted_time, est_displ_1, linewidth=line_width, color=p1_color)
 axs.set_xlabel(r'Time (s)', weight='bold')  # X-axis label with increased font size and bold
 axs.set_ylabel(r'Displacement (mm)')  # Y-axis label with increased font size and bold
 axs.grid(True)  # Add grid with dashed lines
-#axs[0].set_title(r"a)", fontsize=28)
 
-
-# # Plotting on the second subplot
-# axs[1].plot(adjusted_time, adj_displacement, linewidth=line_width, color='r')
-# axs[1].plot(adjusted_time, est_displ_2, linewidth=line_width, color=p2_color)
-# axs[1].set_xlabel(r'Time (s)', weight='bold')  # X-axis label with increased font size and bold
-# axs[1].grid(True)  # Add grid with dashed lines
-#axs[1].set_title(r"b)", fontsize=28)
 
 plt.xlabel(r'Time (s)', weight='bold')  # X-axis label with increased font size and bold
-#plt.ylabel(r'Displacement (mm)')  # Y-axis label with increased font size and bold
 plt.grid(True)  # Add grid with dashed lines
 
 
@@ -139,21 +139,35 @@ legend_elements = [
 ]
 
 fig.legend(handles=legend_elements, loc='upper center', handlelength=2,ncol=7, bbox_to_anchor=(0.5, 1.01), fontsize=18)
-
 fig.subplots_adjust(
     top=0.925,
     bottom=0.615,
-    left=0.075,
+    left=0.3,
     right=0.98,
     hspace=0.2,
     wspace=0.105
 )
 
-plt.savefig('lft-filtered-movavg50.pdf')
+
+l1, = axs.plot([], [], color=(1, 1,1), linestyle='--', linewidth=line_width)
+l2, = axs.plot([], [], linewidth=line_width, color=p1_color)
+
+def init():
+    l2, = axs.plot([], [], linewidth=line_width, color=p1_color)
+    return l2
+
+def update(frame):
+    l1 = axs.plot(adjusted_time, adj_displacement, linewidth=line_width, color='r')
+    l2 = axs.plot(adjusted_time, est_displ_1, linewidth=line_width, color=p1_color)  
+
+
+plt.savefig('vogt-filtered-movavg1.pdf')
 # plt.legend(['Actual Displacement', 'Estimated Displacement'])
 # plt.title('Estimated Displacement', fontsize=25)
 
+ani = FuncAnimation(fig, update, frames=len(adjusted_time)/10, init_func=init, blit=True)
 
+ani.save('animated_plot_ss_lemni.mov', writer='ffmpeg', fps=30)
 #################################################### PLOT POLYNOMIAL FIT 
 
 # residuals = est_displ - adj_displacement
